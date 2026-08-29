@@ -31,6 +31,13 @@ export default function Home() {
   const stageWrapRef = useRef(null);
   const [form, setForm] = useState({ nome: '', whatsapp: '', mensagem: '' });
   const [heroFinished, setHeroFinished] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 760);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 760);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -152,8 +159,8 @@ export default function Home() {
 
       {/* ===================== HERO — vídeo 360º controlado pelo scroll ===================== */}
       <section className="hero-pin" ref={stageWrapRef}>
-        <div className="hero-stage">
-          <video ref={videoRef} className="hero-video" src={heroVideo} muted playsInline preload="auto" />
+        <div className={`hero-stage${isMobile ? ' hero-stage-mobile' : ''}`}>
+          <video ref={videoRef} className={`hero-video${isMobile ? ' hero-video-mobile' : ''}`} src={heroVideo} muted playsInline preload="auto" />
           <div className="hero-veil" />
         </div>
       </section>

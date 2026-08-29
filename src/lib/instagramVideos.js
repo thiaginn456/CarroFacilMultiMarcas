@@ -17,30 +17,32 @@
  * Se quiser mais vídeos no carrossel, é só mandar os links.
  */
 
+const baseUrl = import.meta.env.BASE_URL || '/';
+
 export const instagramVideos = [
   {
     url: 'https://www.instagram.com/p/DJNBnG3xe8K/',
     title: 'Vídeo Carro Fácil 1',
-    thumbnail: '/instagram-1.jpg'
+    thumbnail: `${baseUrl}instagram-1.jpg`
   },
   {
     url: 'https://www.instagram.com/p/DN_NBdGDp96/',
     title: 'Vídeo Carro Fácil 2',
-    thumbnail: '/instagram-2.jpg'
+    thumbnail: `${baseUrl}instagram-2.jpg`
   },
   {
     url: 'https://www.instagram.com/p/DCCFwHdRiog/',
     title: 'Vídeo Carro Fácil 3',
-    thumbnail: '/instagram-3.jpg'
+    thumbnail: `${baseUrl}instagram-3.jpg`
   },
   {
     url: 'https://www.instagram.com/helton_carrofacil/reel/DOmyfOejAyM/',
     title: 'Vídeo Carro Fácil 4',
-    thumbnail: '/instagram-4.jpg'
+    thumbnail: `${baseUrl}instagram-4.jpg`
   },
   {
     url: 'https://www.instagram.com/helton_carrofacil/reel/DcetFjqIMJw/',
     title: 'Vídeo Carro Fácil 5',
-    thumbnail: '/instagram-5.jpg'
+    thumbnail: `${baseUrl}instagram-5.jpg`
   }
 ];
