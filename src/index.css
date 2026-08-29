@@ -362,6 +362,9 @@ textarea:focus-visible {
   object-fit: cover;
   object-position: center 62%;
   opacity: 0.92;
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
 }
 .hero-veil {
   position: absolute;
@@ -761,8 +764,54 @@ textarea:focus-visible {
   line-height: 1.4;
 }
 
+@keyframes mobileHeroSpin {
+  0% {
+    transform: scale(1.22) rotate(-8deg) translateY(6px);
+  }
+  50% {
+    transform: scale(1.28) rotate(4deg) translateY(-6px);
+  }
+  100% {
+    transform: scale(1.19) rotate(-2deg) translateY(4px);
+  }
+}
+
 /* Media queries */
 @media (max-width: 760px) {
+  .hero-pin {
+    height: 210vh;
+  }
+  .hero-stage {
+    align-items: flex-start;
+    padding-top: 90px;
+  }
+  .hero-stage-mobile {
+    background:
+      radial-gradient(
+        ellipse at 50% 38%,
+        rgba(52, 196, 116, 0.28) 0%,
+        transparent 58%
+      ),
+      var(--bg);
+  }
+  .hero-video-mobile {
+    inset: -8% -6% -8% -6%;
+    width: 118%;
+    height: 118%;
+    object-position: center center;
+    transform-origin: center center;
+    animation: mobileHeroSpin 14s ease-in-out infinite alternate;
+    filter: saturate(1.15) brightness(0.85);
+    opacity: 1;
+  }
+  .hero-veil {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 10, 8, 0.18) 0%,
+      rgba(6, 10, 8, 0.1) 36%,
+      rgba(6, 10, 8, 0.78) 100%
+    );
+  }
   .instagram-carousel-container {
     flex-direction: row;
     gap: 8px;
