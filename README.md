@@ -30,7 +30,16 @@ Isso cria uma pasta `dist/` com o site já pronto (HTML, CSS, JS otimizados) —
 npm run preview
 ```
 
-**Atenção ao publicar:** como o site usa rotas como `/estoque`, `/carro/:id` e `/admin`, ao publicar num servidor tradicional (Apache/cPanel) você precisa configurar redirecionamento de qualquer rota para `index.html` (isso já vem pronto por padrão na Netlify e na Vercel). Se a sua hospedagem for diferente e as páginas internas derem "404" ao atualizar a página, me avise que ajudo a configurar isso.
+## Publicar no GitHub Pages
+
+O projeto já está preparado para GitHub Pages com `vite.config.js` apontando para o repositório e com workflow de deploy automático em `.github/workflows/deploy.yml`.
+
+1. No GitHub, abra o repositório e vá em Settings → Pages.
+2. Em "Source", selecione "GitHub Actions".
+3. Faça push na branch `main` e a ação vai publicar automaticamente.
+4. O site ficará em: `https://thiaginn456.github.io/CarroFacilMultiMarcas/`
+
+**Atenção ao publicar:** como o site usa rotas como `/estoque`, `/carro/:id` e `/admin`, ao publicar num servidor tradicional (Apache/cPanel) você precisa configurar redirecionamento de qualquer rota para `index.html` (isso já vem pronto por padrão na Netlify e na Vercel). No GitHub Pages, o arquivo `public/404.html` faz esse redirecionamento para a rota correta. Se a sua hospedagem for diferente e as páginas internas derem "404" ao atualizar a página, me avise que ajudo a configurar isso.
 
 ## Estrutura do projeto
 
