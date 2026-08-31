@@ -72,7 +72,10 @@ export default function Home() {
     let timelineBuilt = false;
     let frameId = 0;
     let pendingTime = null;
+    let lastSeekAt = 0;
+    let lastHeroFinished = false;
     let triggers = [];
+    const mobile = window.matchMedia('(max-width: 760px)').matches;
 
     function buildTimeline() {
       const duration = video.duration || 5;
@@ -81,16 +84,26 @@ export default function Home() {
         trigger: stage,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: true,
+        scrub: mobile ? 0.18 : true,
         onUpdate: (self) => {
-          setHeroFinished(self.progress >= 0.999);
+          const heroFinishedNow = self.progress >= 0.999;
+          if (heroFinishedNow !== lastHeroFinished) {
+            lastHeroFinished = heroFinishedNow;
+            setHeroFinished(heroFinishedNow);
+          }
           if (!ready) return;
           pendingTime = self.progress * Math.max(duration - 0.05, 0);
+          const now = performance.now();
+          if (mobile && now - lastSeekAt < 1000 / 30) return;
+          lastSeekAt = now;
           if (frameId) return;
           frameId = requestAnimationFrame(() => {
             frameId = 0;
             if (pendingTime === null || !Number.isFinite(pendingTime)) return;
-            try { video.currentTime = pendingTime; } catch (e) { /* noop */ }
+            try {
+              video.pause();
+              video.currentTime = pendingTime;
+            } catch (e) { /* noop */ }
           });
         }
       });
