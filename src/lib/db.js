@@ -17,6 +17,22 @@ import { supabase } from './supabaseClient.js';
 
 const FOTOS_BUCKET = 'fotos-carros';
 
+function isHeicFile(file) {
+  return /\.hei[cf]$/i.test(file.name || '')
+    || ['image/heic', 'image/heif'].includes((file.type || '').toLowerCase());
+}
+
+// Converte HEIC no navegador para que a URL pública funcione em qualquer aparelho.
+export async function prepareImageForWeb(file) {
+  if (!isHeicFile(file)) return file;
+
+  const { default: heic2any } = await import('heic2any');
+  const converted = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.88 });
+  const jpegBlob = Array.isArray(converted) ? converted[0] : converted;
+  const baseName = (file.name || 'foto').replace(/\.[^.]+$/, '');
+  return new File([jpegBlob], `${baseName}.jpg`, { type: 'image/jpeg' });
+}
+
 // Gera uma imagem SVG simples (silhueta de carro + nome) usada
 // como "foto" quando o veículo ainda não tem nenhuma foto real
 // cadastrada. Assim o card nunca fica com espaço vazio/quebrado.
@@ -108,9 +124,12 @@ export async function getById(id) {
 export async function uploadFotos(files) {
   const urls = [];
   for (const file of files) {
-    const ext = (file.name || '').split('.').pop() || 'jpg';
+    const webFile = await prepareImageForWeb(file);
+    const ext = (webFile.name || '').split('.').pop() || 'jpg';
     const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const { error } = await supabase.storage.from(FOTOS_BUCKET).upload(path, file);
+    const { error } = await supabase.storage.from(FOTOS_BUCKET).upload(path, webFile, {
+      contentType: webFile.type || 'image/jpeg'
+    });
     if (error) {
       console.error('Erro ao enviar foto', error);
       continue;

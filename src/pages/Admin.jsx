@@ -21,6 +21,7 @@ import ConfirmModal from '../components/ConfirmModal.jsx';
 import Toast from '../components/Toast.jsx';
 import {
   readAll, addCar, deleteCar, uploadFotos, placeholderSvg,
+  prepareImageForWeb,
   getAdminSession, signInAdmin, signOutAdmin, updateAdminPassword,
   readSellers, addSeller, deleteSeller
 } from '../lib/db.js';
@@ -121,9 +122,10 @@ export default function Admin() {
   // verdade) é enviado ao Supabase Storage só quando o formulário é
   // publicado; `preview` (URL temporária local) é só pra mostrar a
   // miniatura na hora, sem precisar subir nada ainda.
-  function handlePhotoChange(e) {
+  async function handlePhotoChange(e) {
     const files = Array.from(e.target.files || []);
-    setPhotos((prev) => [...prev, ...files.map((file) => ({ file, preview: URL.createObjectURL(file) }))]);
+    const preparedFiles = await Promise.all(files.map(prepareImageForWeb));
+    setPhotos((prev) => [...prev, ...preparedFiles.map((file) => ({ file, preview: URL.createObjectURL(file) }))]);
     if (fileInputRef.current) fileInputRef.current.value = '';
   }
 

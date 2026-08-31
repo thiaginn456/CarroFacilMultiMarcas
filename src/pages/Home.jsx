@@ -69,6 +69,9 @@ export default function Home() {
     if (!stage || !video) return undefined;
 
     let ready = false;
+    let timelineBuilt = false;
+    let frameId = 0;
+    let pendingTime = null;
     let triggers = [];
 
     function buildTimeline() {
@@ -82,19 +85,22 @@ export default function Home() {
         onUpdate: (self) => {
           setHeroFinished(self.progress >= 0.999);
           if (!ready) return;
-          const targetTime = self.progress * duration;
-          if (!isNaN(targetTime)) {
-            try { video.currentTime = targetTime; } catch (e) { /* noop */ }
-          }
+          pendingTime = self.progress * Math.max(duration - 0.05, 0);
+          if (frameId) return;
+          frameId = requestAnimationFrame(() => {
+            frameId = 0;
+            if (pendingTime === null || !Number.isFinite(pendingTime)) return;
+            try { video.currentTime = pendingTime; } catch (e) { /* noop */ }
+          });
         }
       });
       triggers.push(st);
     }
 
     function onMeta() {
-      // Aguarda vídeo estar pronto antes de iniciar
-      if (video.readyState >= 2) {
+      if (video.readyState >= 2 && !timelineBuilt) {
         ready = true;
+        timelineBuilt = true;
         buildTimeline();
         ScrollTrigger.refresh();
       }
@@ -110,6 +116,7 @@ export default function Home() {
     return () => {
       video.removeEventListener('loadedmetadata', onMeta);
       video.removeEventListener('canplay', onMeta);
+      if (frameId) cancelAnimationFrame(frameId);
       triggers.forEach((t) => t && t.kill());
     };
   }, []);
