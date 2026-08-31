@@ -20,14 +20,14 @@ import logo from '../assets/logo.png';
 import ConfirmModal from '../components/ConfirmModal.jsx';
 import Toast from '../components/Toast.jsx';
 import {
-  readAll, addCar, deleteCar, uploadFotos, placeholderSvg, formatBRL,
+  readAll, addCar, deleteCar, uploadFotos, placeholderSvg,
   getAdminSession, signInAdmin, signOutAdmin, updateAdminPassword,
   readSellers, addSeller, deleteSeller
 } from '../lib/db.js';
 
 const emptyCarForm = {
   marca: '', modelo: '', nome: '', informacao: '', ano: '', km: '',
-  valor: '', combustivel: '', cor: '', categoria: '', placaFinal: ''
+  combustivel: '', cor: '', categoria: '', placaFinal: ''
 };
 
 const onlyNumbers = (value) => value.replace(/\D/g, '');
@@ -143,7 +143,6 @@ export default function Admin() {
         informacao: carForm.informacao.trim(),
         ano: carForm.ano.trim(),
         kmRodado: carForm.km.trim(),
-        valor: Number(carForm.valor),
         combustivel: carForm.combustivel,
         cor: carForm.cor.trim(),
         categoria: carForm.categoria.trim(),
@@ -334,22 +333,14 @@ export default function Admin() {
                 </div>
               </div>
 
-              <div className="two-col">
-                <div className="field">
-                  <label htmlFor="valor">Valor (R$)</label>
-                  <input type="number" id="valor" required placeholder="104900" min="0" step="0.01"
-                    inputMode="decimal" value={carForm.valor}
-                    onChange={(e) => setCarForm({ ...carForm, valor: onlyDecimalNumbers(e.target.value) })} />
-                </div>
-                <div className="field">
-                  <label htmlFor="combustivel">Combustível</label>
-                  <select id="combustivel"
-                    value={carForm.combustivel} onChange={(e) => setCarForm({ ...carForm, combustivel: e.target.value })}>
-                    <option value="">Selecione</option>
-                    <option>Flex</option><option>Gasolina</option><option>Etanol</option>
-                    <option>Diesel</option><option>Híbrido</option><option>Elétrico</option>
-                  </select>
-                </div>
+              <div className="field">
+                <label htmlFor="combustivel">Combustível</label>
+                <select id="combustivel"
+                  value={carForm.combustivel} onChange={(e) => setCarForm({ ...carForm, combustivel: e.target.value })}>
+                  <option value="">Selecione</option>
+                  <option>Flex</option><option>Gasolina</option><option>Etanol</option>
+                  <option>Diesel</option><option>Híbrido</option><option>Elétrico</option>
+                </select>
               </div>
 
               <div className="two-col">
@@ -409,7 +400,7 @@ export default function Admin() {
                   <img src={(c.fotos && c.fotos[0]) || placeholderSvg(c.nome)} alt="" />
                   <div className="info">
                     <div className="name">{c.nome}</div>
-                    <div className="meta">{c.ano} · {c.kmRodado} km · R$ {formatBRL(c.valor)}</div>
+                    <div className="meta">{c.ano} · {c.kmRodado} km</div>
                   </div>
                   <button className="btn btn-danger" onClick={() => {
                     setDeletePassword('');
