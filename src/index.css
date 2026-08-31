@@ -771,19 +771,15 @@ textarea:focus-visible {
 @media (max-width: 760px) {
   .hero-pin {
     height: 190vh;
+    background: #000;
   }
   .hero-stage {
     align-items: center;
     padding: 72px 18px 24px;
+    background: #000;
   }
   .hero-stage-mobile {
-    background:
-      radial-gradient(
-        ellipse at 50% 38%,
-        rgba(52, 196, 116, 0.28) 0%,
-        transparent 58%
-      ),
-      var(--bg);
+    background: #000;
   }
   .hero-video-mobile {
     position: relative;
@@ -794,19 +790,13 @@ textarea:focus-visible {
     object-position: center center;
     object-fit: cover;
     transform: none;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 14px;
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
-    filter: saturate(1.15) brightness(0.85);
-    opacity: 1;
+    filter: saturate(0.95) brightness(0.78);
+    opacity: 0.94;
+    -webkit-mask-image: radial-gradient(ellipse 78% 88% at center, #000 48%, rgba(0, 0, 0, 0.9) 68%, transparent 100%);
+    mask-image: radial-gradient(ellipse 78% 88% at center, #000 48%, rgba(0, 0, 0, 0.9) 68%, transparent 100%);
   }
   .hero-veil {
-    background: linear-gradient(
-      180deg,
-      rgba(6, 10, 8, 0.18) 0%,
-      rgba(6, 10, 8, 0.1) 36%,
-      rgba(6, 10, 8, 0.78) 100%
-    );
+    background: linear-gradient(180deg, transparent 42%, rgba(0, 0, 0, 0.72) 100%);
   }
   .instagram-carousel-container {
     flex-direction: row;
