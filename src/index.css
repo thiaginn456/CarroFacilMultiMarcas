@@ -764,18 +764,6 @@ textarea:focus-visible {
   line-height: 1.4;
 }
 
-@keyframes mobileHeroSpin {
-  0% {
-    transform: scale(0.78) rotate(-4deg) translateY(4px);
-  }
-  50% {
-    transform: scale(0.82) rotate(2deg) translateY(-4px);
-  }
-  100% {
-    transform: scale(0.8) rotate(-1deg) translateY(2px);
-  }
-}
-
 /* Media queries */
 @media (max-width: 760px) {
   .hero-pin {
@@ -783,33 +771,33 @@ textarea:focus-visible {
   }
   .hero-stage {
     align-items: flex-start;
-    padding-top: 90px;
+    padding-top: 74px;
   }
   .hero-stage-mobile {
-    background:
-      radial-gradient(
-        ellipse at 50% 38%,
-        rgba(52, 196, 116, 0.28) 0%,
-        transparent 58%
-      ),
-      var(--bg);
+    background: #030303;
   }
   .hero-video-mobile {
-    inset: 8% -2% 4% -2%;
-    width: 104%;
-    height: 92%;
-    object-position: center 42%;
-    transform-origin: center center;
-    animation: mobileHeroSpin 14s ease-in-out infinite alternate;
-    filter: saturate(1.15) brightness(0.85);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(100vw - 18px, 520px);
+    height: auto;
+    aspect-ratio: 16 / 9;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    filter: saturate(1.08) brightness(0.88);
     opacity: 1;
   }
   .hero-veil {
     background: linear-gradient(
       180deg,
-      rgba(6, 10, 8, 0.18) 0%,
-      rgba(6, 10, 8, 0.1) 36%,
-      rgba(6, 10, 8, 0.78) 100%
+      rgba(3, 3, 3, 0) 0%,
+      rgba(3, 3, 3, 0.4) 50%,
+      rgba(3, 3, 3, 0.9) 100%
     );
   }
   .instagram-carousel-container {
@@ -1040,6 +1028,9 @@ textarea:focus-visible {
   gap: 56px;
   align-items: flex-start;
 }
+.detail-grid > div {
+  min-width: 0;
+}
 .detail-gallery-main {
   border-radius: var(--radius-m);
   overflow: hidden;
@@ -1067,10 +1058,15 @@ textarea:focus-visible {
   display: flex;
   gap: 10px;
   margin-top: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 .detail-thumbs img {
   width: 64px;
   height: 48px;
+  flex: 0 0 auto;
   object-fit: cover;
   border-radius: 8px;
   opacity: 0.6;
