@@ -6,7 +6,6 @@
  */
 import { Link } from 'react-router-dom';
 import { CalendarDays, Gauge } from 'lucide-react';
-import { formatBRL } from '../lib/db.js';
 
 export default function CarCard({ car, grid = false, revealDelay }) {
   const photo = car.fotos && car.fotos[0]; // sempre usa a 1ª foto cadastrada como capa
@@ -32,7 +31,6 @@ export default function CarCard({ car, grid = false, revealDelay }) {
           <div className="row"><span><Gauge className="car-card-icon" size={15} strokeWidth={2.2} aria-hidden="true" /> {car.kmRodado || '-'} km</span></div>
           <div className="row">
             <span><CalendarDays className="car-card-icon" size={15} strokeWidth={2.2} aria-hidden="true" /> {car.ano || '-'}</span>
-            <span className="car-card-price">R$ {formatBRL(car.valor)}</span>
           </div>
         </div>
         <span className="btn btn-dark btn-block">Negociar</span>

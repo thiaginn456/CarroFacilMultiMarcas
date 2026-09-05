@@ -10,11 +10,8 @@ import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import CarCard from '../components/CarCard.jsx';
-import { readAll, distinctValues, filterCars, formatBRL } from '../lib/db.js';
+import { readAll, distinctValues, filterCars } from '../lib/db.js';
 import { useScrollReveal } from '../lib/useScrollReveal.js';
-
-// Opções fixas do filtro de "preço máximo" (em reais).
-const FAIXAS_PRECO = [50000, 80000, 120000, 200000, 400000, 700000];
 
 export default function Estoque() {
   const [allCars, setAllCars] = useState([]); // todo o estoque, sem filtro
@@ -66,7 +63,6 @@ export default function Estoque() {
             </select>
             <select className="filter-select" value={filters.precoMax} onChange={(e) => update('precoMax', e.target.value)}>
               <option value="">Preço máximo</option>
-              {FAIXAS_PRECO.map((v) => <option key={v} value={v}>Até R$ {formatBRL(v)}</option>)}
             </select>
             <button className="btn btn-outline" onClick={clearFilters}>Limpar filtros</button>
           </aside>

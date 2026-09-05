@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
-import { getById, formatBRL, getRandomSellerWhatsApp } from '../lib/db.js';
+import { getById, getRandomSellerWhatsApp } from '../lib/db.js';
 import { openWhatsAppComVendedorAleatorio, interestMessage, financingMessage } from '../lib/whatsapp.js';
 import { useScrollReveal } from '../lib/useScrollReveal.js';
 
@@ -130,8 +130,6 @@ export default function CarDetail() {
             <span className="detail-panel-title">Nome do <span className="accent">veículo</span></span>
             <h1 className="detail-panel-name">{car.nome || `${car.marca} ${car.modelo}`}</h1>
             <p style={{ color: 'var(--muted)', marginTop: 10 }}>{car.informacao}</p>
-
-            <div className="detail-price">R$ {formatBRL(car.valor)}</div>
 
             <div className="detail-specs">
               <div><div className="spec-label">{car.ano || '—'}</div><div className="spec-value">Ano</div></div>
